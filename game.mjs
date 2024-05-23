@@ -1,14 +1,58 @@
-import { Application } from './pixi.mjs';
+import {Application, Assets, Sprite} from './pixi.mjs';
+import {Enemy} from './enemy.mjs';
 
-// Asynchronous IIFE
+const app = new Application();
+
+const appWidth = screen.width < screen.height ? screen.width : screen.height;
+
+let path;
+
+async function setup() {
+    await app.init({ background: '#1099bb', resizeTo: document.getElementById("hi")});
+    console.log(app.screen.width);
+    console.log(app.screen.height)
+    document.body.insertBefore(app.canvas, document.getElementById("hi"));
+}
+
+async function loadTextures() {
+    const assets = [
+        { alias: 'enemy', src: './assets/enemy.png' },
+        { alias: 'tower', src: './assets/tower.png' },
+        { alias: 'path', src: './assets/path.png' },
+        { alias: 'bullet', src: './assets/bullet.png' }
+    ]
+
+    await Assets.load(assets)
+}
+
+function drawSprite(sprite, position) {
+    const spriteInst = Sprite.from(sprite);
+    
+    spriteInst.x = (position[0] - 1) * 32;
+    spriteInst.y = (position[1] - 1) * 32;
+
+    app.stage.addChild(spriteInst);
+}
+
+async function loadPath() {
+    let response = await fetch('./level.json');
+    let rawPath = await response.json();
+    
+    rawPath = rawPath.rawPath;
+    path = [];
+    for (let a = 1; a < Object.keys(rawPath).length; a++) {
+        let goingY = rawPath[a].x == rawPath[a + 1].x;
+        let distance = goingY ? rawPath[a + 1].y - rawPath[a].y : rawPath[a + 1].x - rawPath[a].x;
+        for (let b = 0; b <= Math.abs(distance); b++) {
+            path.push([goingY ? rawPath[a].x : rawPath[a].x + (b * Math.sign(distance)), goingY ? rawPath[a].y + (b * Math.sign(distance)) : rawPath[a].y]);
+            drawSprite('path', path[path.length - 1]);
+        }
+    }
+}
+
 (async () =>
 {
-    // Create a PixiJS application.
-    const app = new Application();
-
-    // Intialize the application.
-    await app.init({ background: '#1099bb', resizeTo: window });
-
-    // Then adding the application's canvas to the DOM body.
-    document.body.appendChild(app.canvas);
+    await setup();
+    await loadTextures();
+    await loadPath();
 })();

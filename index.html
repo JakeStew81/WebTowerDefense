@@ -1,8 +1,24 @@
 <!DOCTYPE html>
 <head>
     <title>PixiJS Example Using Browser Module</title>
+    <style>
+        div {
+            height: 640px;
+            width: 640px;
+        }
+        canvas {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        body {
+            background-color:black;
+        }
+    </style>
 </head>
 <body>
+    <div id="hi"></div>
     <script type="module" src="./game.mjs"></script>
 </body>
 </html>
