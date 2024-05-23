@@ -55,4 +55,8 @@ async function loadPath() {
     await setup();
     await loadTextures();
     await loadPath();
+
+    const enemy = new Enemy(10, path, app);
+
+    app.ticker.add((time) => enemy.move(time));
 })();

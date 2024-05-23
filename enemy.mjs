@@ -1,16 +1,29 @@
 import { Sprite } from './pixi.mjs';
 
 export class Enemy {
-    constructor(health, position, app) {
+    constructor(health, path, app) {
         this.health = health;
+        this.path = path;
+        this.distanceOnPath = 0;
 
-        const sprite = Sprite.from('enemy');
+        this.counter = 0;
 
-        sprite.anchor.set(0.5, 0.5);
+        this.sprite = Sprite.from('enemy');
 
-        sprite.x = position[0];
-        sprite.y = position[1];
+        this.sprite.x = (path[0][0] - 1) * 32;
+        this.sprite.y = (path[0][1] - 1) * 32;
 
-        app.stage.addChild(sprite);
+        app.stage.addChild(this.sprite);
+    }
+
+    move(time) {
+        this.counter += time.deltaTime;
+        if (this.counter >= 1) {
+            this.counter = 0;
+            this.distanceOnPath++;
+
+            this.sprite.x = (this.path[this.distanceOnPath][0] - 1) * 32;
+            this.sprite.y = (this.path[this.distanceOnPath][1] - 1) * 32;
+        }
     }
 }
