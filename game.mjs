@@ -56,9 +56,9 @@ async function loadPath(json) {
 }
 
 function periodic(time) {
+    enemyManager.periodic(gameTime, time.deltaTime);
+    
     gameTime += time.deltaTime;
-
-    enemyManager.periodic(gameTime);
 }
 
 (async () =>

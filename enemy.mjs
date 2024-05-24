@@ -1,13 +1,13 @@
 import { Sprite } from './pixi.mjs';
 
 export class Enemy {
-    constructor(health, path, app) {
+    constructor(health, speed, path, app) {
         this.health = health;
+        this.speed = speed;
         this.path = path;
         this.distanceOnPath = 0;
 
-        this.previousTime = 0;
-        this.counter = 0;
+        this.time = 0;
 
         this.active = true;
 
@@ -19,20 +19,26 @@ export class Enemy {
         app.stage.addChild(this.sprite);
     }
 
-    move(gameTime) {
-        this.counter += gameTime - this.previousTime;
-        this.previousTime = gameTime;
-        if (this.counter >= 1) {
-            this.counter = 0;
+    move(deltaTime) {
+        this.time += deltaTime;
+
+        console.log("Distance: " + this.distanceOnPath)
+        console.log(this.sprite.x/32);
+        
+        if (this.distanceOnPath < this.path.length - 1) {
+            this.sprite.x += -(this.path[this.distanceOnPath][0] - this.path[this.distanceOnPath + 1][0]) * (32/this.speed) * deltaTime;
+            this.sprite.y += -(this.path[this.distanceOnPath][1] - this.path[this.distanceOnPath + 1][1]) * (32/this.speed) * deltaTime;
+        } else {
+            this.sprite.destroy();
+            this.active = false;
+        }
+
+        if (this.time >= this.speed) {
+            this.time = 0;
             this.distanceOnPath++;
 
-            if (this.distanceOnPath < this.path.length) {
-                this.sprite.x = (this.path[this.distanceOnPath][0] - 1) * 32;
-                this.sprite.y = (this.path[this.distanceOnPath][1] - 1) * 32;
-            } else {
-                this.sprite.destroy();
-                this.active = false;
-            }
+            this.sprite.x = (this.path[this.distanceOnPath][0] - 1) * 32
+            this.sprite.y = (this.path[this.distanceOnPath][1] - 1) * 32
         }
     }
 }

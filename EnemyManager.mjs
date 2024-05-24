@@ -10,18 +10,17 @@ export class EnemyManager {
         this.enemies = [];
     }
 
-    periodic(gameTime) {
+    periodic(gameTime, deltaTime) {
         for (let a = 0; a < this.enemies.length; a++) {
-            this.enemies[a].move(gameTime);
+            this.enemies[a].move(deltaTime);
             if (!this.enemies[a].active) {
                 this.enemies.splice(a, 1);
             }
         }
         for (let a = 1; a <= Object.keys(this.roster).length; a++) {
-            console.log(gameTime)
             if (this.roster[a].enterTime <= gameTime && !this.roster[a].hasEntered) {
                 console.log("made enemy")
-                this.enemies.push(new Enemy(this.roster[a].health, this.path, this.app));
+                this.enemies.push(new Enemy(this.roster[a].health, this.roster[a].speed, this.path, this.app));
                 this.roster[a].hasEntered = true;
             }
         }
