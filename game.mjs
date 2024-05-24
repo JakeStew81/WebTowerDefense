@@ -1,11 +1,13 @@
 import {Application, Assets, Sprite} from './pixi.mjs';
-import {Enemy} from './enemy.mjs';
+import {EnemyManager} from './EnemyManager.mjs';
 
 const app = new Application();
 
 const appWidth = screen.width < screen.height ? screen.width : screen.height;
 
 let path;
+let gameTime = 0;
+let enemyManager;
 
 async function setup() {
     await app.init({ background: '#1099bb', resizeTo: document.getElementById("hi")});
@@ -34,11 +36,14 @@ function drawSprite(sprite, position) {
     app.stage.addChild(spriteInst);
 }
 
-async function loadPath() {
+async function loadJSON(path) {
     let response = await fetch('./level.json');
-    let rawPath = await response.json();
-    
-    rawPath = rawPath.rawPath;
+    let json = await response.json();
+    return json;
+}
+
+async function loadPath(json) {  
+    let rawPath = json.rawPath;
     path = [];
     for (let a = 1; a < Object.keys(rawPath).length; a++) {
         let goingY = rawPath[a].x == rawPath[a + 1].x;
@@ -50,13 +55,20 @@ async function loadPath() {
     }
 }
 
+function periodic(time) {
+    gameTime += time.deltaTime;
+
+    enemyManager.periodic(gameTime);
+}
+
 (async () =>
 {
     await setup();
     await loadTextures();
-    await loadPath();
+    let json = await loadJSON('./level.json');
+    await loadPath(json);
 
-    const enemy = new Enemy(10, path, app);
+    enemyManager = new EnemyManager(app, path, json);
 
-    app.ticker.add((time) => enemy.move(time));
+    app.ticker.add((time) => periodic(time));
 })();

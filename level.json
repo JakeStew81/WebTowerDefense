@@ -56,5 +56,17 @@
             "x": 20,
             "y": 20
         }
+    },
+    "enemies": {
+        "1": {
+            "enterTime": 200,
+            "health": 10,
+            "hasEntered": false
+        },
+        "2": {
+            "enterTime": 300,
+            "health": 10,
+            "hasEntered": false
+        }
     }
 }

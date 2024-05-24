@@ -1,0 +1,29 @@
+import {Enemy} from './enemy.mjs';
+
+export class EnemyManager {
+    constructor(app, path, json) {
+        this.app = app;
+        this.path = path;
+
+        this.roster = json.enemies;
+
+        this.enemies = [];
+    }
+
+    periodic(gameTime) {
+        for (let a = 0; a < this.enemies.length; a++) {
+            this.enemies[a].move(gameTime);
+            if (!this.enemies[a].active) {
+                this.enemies.splice(a, 1);
+            }
+        }
+        for (let a = 1; a <= Object.keys(this.roster).length; a++) {
+            console.log(gameTime)
+            if (this.roster[a].enterTime <= gameTime && !this.roster[a].hasEntered) {
+                console.log("made enemy")
+                this.enemies.push(new Enemy(this.roster[a].health, this.path, this.app));
+                this.roster[a].hasEntered = true;
+            }
+        }
+    }
+}
