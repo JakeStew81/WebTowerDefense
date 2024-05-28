@@ -1,10 +1,12 @@
 import {Application, Assets, Sprite} from './pixi.mjs';
 import {EnemyManager} from './EnemyManager.mjs';
+import {Tower} from './tower.mjs'
 
 const app = new Application();
 
 const appWidth = screen.width < screen.height ? screen.width : screen.height;
 
+let json;
 let path;
 let gameTime = 0;
 let enemyManager;
@@ -14,6 +16,11 @@ async function setup() {
     console.log(app.screen.width);
     console.log(app.screen.height)
     document.body.insertBefore(app.canvas, document.getElementById("hi"));
+
+    await loadTextures();
+    let json = await loadJSON('./level.json');
+    await loadPath(json);
+    await setupClick();
 }
 
 async function loadTextures() {
@@ -38,7 +45,7 @@ function drawSprite(sprite, position) {
 
 async function loadJSON(path) {
     let response = await fetch('./level.json');
-    let json = await response.json();
+    json = await response.json();
     return json;
 }
 
@@ -55,6 +62,15 @@ async function loadPath(json) {
     }
 }
 
+async function setupClick() {
+    app.stage.eventMode = 'static';
+    app.stage.hitArea = app.screen;
+    app.stage.addEventListener('pointerdown', (e) =>
+    {
+        new Tower([Math.floor(e.global.x / 32), Math.floor(e.global.y / 32)], 10, 1, 10, app);
+    });
+}
+
 function periodic(time) {
     enemyManager.periodic(gameTime, time.deltaTime);
     
@@ -64,9 +80,6 @@ function periodic(time) {
 (async () =>
 {
     await setup();
-    await loadTextures();
-    let json = await loadJSON('./level.json');
-    await loadPath(json);
 
     enemyManager = new EnemyManager(app, path, json);
 

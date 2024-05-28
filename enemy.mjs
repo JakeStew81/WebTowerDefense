@@ -21,9 +21,6 @@ export class Enemy {
 
     move(deltaTime) {
         this.time += deltaTime;
-
-        console.log("Distance: " + this.distanceOnPath)
-        console.log(this.sprite.x/32);
         
         if (this.distanceOnPath < this.path.length - 1) {
             this.sprite.x += -(this.path[this.distanceOnPath][0] - this.path[this.distanceOnPath + 1][0]) * (32/this.speed) * deltaTime;

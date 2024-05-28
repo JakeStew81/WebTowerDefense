@@ -19,7 +19,6 @@ export class EnemyManager {
         }
         for (let a = 1; a <= Object.keys(this.roster).length; a++) {
             if (this.roster[a].enterTime <= gameTime && !this.roster[a].hasEntered) {
-                console.log("made enemy")
                 this.enemies.push(new Enemy(this.roster[a].health, this.roster[a].speed, this.path, this.app));
                 this.roster[a].hasEntered = true;
             }
