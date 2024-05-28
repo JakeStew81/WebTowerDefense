@@ -11,6 +11,9 @@ let path;
 let gameTime = 0;
 let enemyManager;
 
+let displayGhost = (event) => displayTowerGhost(towerGhost, event);
+let towerGhost;
+
 async function setup() {
     await app.init({ background: '#1099bb', resizeTo: document.getElementById("hi")});
     console.log(app.screen.width);
@@ -20,7 +23,12 @@ async function setup() {
     await loadTextures();
     let json = await loadJSON('./level.json');
     await loadPath(json);
-    await setupClick();
+    await setupMouse();
+
+    towerGhost = Sprite.from('tower');
+    towerGhost.tint = 0x333333;
+    towerGhost.visible = false;
+    app.stage.addChild(towerGhost);
 }
 
 async function loadTextures() {
@@ -62,13 +70,31 @@ async function loadPath(json) {
     }
 }
 
-async function setupClick() {
+async function setupMouse() {
     app.stage.eventMode = 'static';
     app.stage.hitArea = app.screen;
-    app.stage.addEventListener('pointerdown', (e) =>
-    {
-        new Tower([Math.floor(e.global.x / 32), Math.floor(e.global.y / 32)], 10, 1, 10, app);
-    });
+
+    window.addEventListener('keydown', (event) => keydownHandler(event));
+
+    app.stage.addEventListener('pointerdown', (e) => mouseHandler(e));
+}
+
+function displayTowerGhost(ghost, event) {
+    ghost.visible = true;
+
+    ghost.x = Math.floor(event.global.x / 32) * 32;
+    ghost.y = Math.floor(event.global.y / 32) * 32;
+}
+function keydownHandler(event) {
+    if(event.code == "Digit1") {
+        app.stage.addEventListener("pointermove", displayGhost);
+    }
+}
+
+function mouseHandler(event) {
+    console.log('bye')
+    app.stage.removeEventListener('pointermove', displayGhost);
+    new Tower([Math.floor(event.global.x / 32), Math.floor(event.global.y / 32)], 10, 1, 10, 'tower', app)
 }
 
 function periodic(time) {
