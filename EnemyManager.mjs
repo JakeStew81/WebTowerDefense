@@ -5,11 +5,13 @@ export class EnemyManager {
         this.app = app;
         this.path = path;
 
-        this.health = 100;
+        this.health = json.health;
 
         this.roster = json.enemies;
 
         this.enemies = [];
+
+        this.earnedMoney = 0;
     }
 
     periodic(gameTime, deltaTime) {
@@ -17,18 +19,15 @@ export class EnemyManager {
             this.enemies[a].move(deltaTime);
             if (!this.enemies[a].active) {
                 this.health -= this.enemies[a].health;
+                this.earnedMoney += (this.enemies[a].killed) ? this.enemies[a].value : 0;
                 this.enemies.splice(a, 1);
             }
         }
         for (let a = 1; a <= Object.keys(this.roster).length; a++) {
             if (this.roster[a].enterTime <= gameTime && !this.roster[a].hasEntered) {
-                this.enemies.push(new Enemy(this.roster[a].health, this.roster[a].speed, this.path, this.app));
+                this.enemies.push(new Enemy(this.roster[a].health, this.roster[a].speed, this.roster[a].value, this.path, this.app));
                 this.roster[a].hasEntered = true;
             }
         }
-    }
-
-    getHealth() {
-        return this.health;
     }
 }

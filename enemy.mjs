@@ -1,7 +1,8 @@
 import { Sprite, Graphics } from './pixi.mjs';
 
 export class Enemy {
-    constructor(health, speed, path, app) {
+    constructor(health, speed, value, path, app) {
+        this.value = value;
         this.health = health;
         this.speed = speed;
         this.path = path;
@@ -10,6 +11,7 @@ export class Enemy {
         this.time = 0;
 
         this.active = true;
+        this.killed = false;
 
         this.sprite = Sprite.from('enemy');
 
@@ -95,6 +97,7 @@ export class Enemy {
                 this.healthBars[a].destroy()
             }
             this.active = false;
+            this.killed = true;
         }
     }
 }

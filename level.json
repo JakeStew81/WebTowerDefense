@@ -58,12 +58,14 @@
             "enterTime": 200,
             "health": 10,
             "speed": 8,
+            "value": 10,
             "hasEntered": false
         },
         "2": {
             "enterTime": 300,
             "health": 10,
             "speed": 8,
+            "value": 10,
             "hasEntered": false
         }
     },

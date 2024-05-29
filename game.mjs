@@ -16,7 +16,7 @@ let healthTxt;
 let moneyTxt;
 
 async function setup() {
-    await app.init({ background: '#1099bb', resizeTo: document.getElementById("hi")});
+    await app.init({ background: '#a8acaa', resizeTo: document.getElementById("hi")});
     console.log(app.screen.width);
     console.log(app.screen.height)
     document.body.insertBefore(app.canvas, document.getElementById("hi"));
@@ -60,6 +60,8 @@ function displayStats(health, money) {
     healthTxt.y = 4;
 
     app.stage.addChild(healthTxt);
+
+    console.log(healthTxt.text);
 
     moneyTxt = new Text({
         text: money,
@@ -106,6 +108,9 @@ function periodic(time) {
     towerManager.periodic(enemyManager.enemies, time.deltaTime);
     
     gameTime += time.deltaTime;
+
+    towerManager.money += enemyManager.earnedMoney;
+    enemyManager.earnedMoney = 0;
 
     healthTxt.text = enemyManager.health;
     moneyTxt.text = towerManager.money;
