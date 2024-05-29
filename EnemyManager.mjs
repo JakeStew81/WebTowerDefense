@@ -5,6 +5,8 @@ export class EnemyManager {
         this.app = app;
         this.path = path;
 
+        this.health = 100;
+
         this.roster = json.enemies;
 
         this.enemies = [];
@@ -14,6 +16,7 @@ export class EnemyManager {
         for (let a = 0; a < this.enemies.length; a++) {
             this.enemies[a].move(deltaTime);
             if (!this.enemies[a].active) {
+                this.health -= this.enemies[a].health;
                 this.enemies.splice(a, 1);
             }
         }
@@ -23,5 +26,9 @@ export class EnemyManager {
                 this.roster[a].hasEntered = true;
             }
         }
+    }
+
+    getHealth() {
+        return this.health;
     }
 }

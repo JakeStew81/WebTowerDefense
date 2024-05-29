@@ -1,6 +1,6 @@
-import {Application, Assets, Sprite} from './pixi.mjs';
-import {EnemyManager} from './EnemyManager.mjs';
-import { EventHandler } from './EventHandler.mjs';
+import { Application, Assets, Sprite, Text, TextStyle } from './pixi.mjs';
+import { EnemyManager } from './EnemyManager.mjs';
+import { TowerManager } from './TowerManager.mjs';
 
 const app = new Application();
 
@@ -10,7 +10,10 @@ let json;
 let path;
 let gameTime = 0;
 let enemyManager;
-let eventHandler;
+let towerManager;
+
+let healthTxt;
+let moneyTxt;
 
 async function setup() {
     await app.init({ background: '#1099bb', resizeTo: document.getElementById("hi")});
@@ -21,6 +24,9 @@ async function setup() {
     await loadTextures();
     let json = await loadJSON('./level.json');
     await loadPath(json);
+
+    drawSprite('healthSymbol', [1, 1]);
+    displayStats(json.health, json.startMoney);
 }
 
 async function loadTextures() {
@@ -28,15 +34,46 @@ async function loadTextures() {
         { alias: 'enemy', src: './assets/enemy.png' },
         { alias: 'fastTower', src: './assets/fastTower.png' },
         { alias: 'normalTower', src: './assets/normalTower.png' },
+        { alias: 'boxingTower', src: './assets/boxingTower.png' },
         { alias: 'path', src: './assets/path.png' },
-        { alias: 'bullet', src: './assets/bullet.png' }
+        { alias: 'bullet', src: './assets/bullet.png' },
+        { alias: 'healthSymbol', src: './assets/healthSymbol.png' }
     ]
 
     await Assets.load(assets)
 }
 
+function displayStats(health, money) {
+    let style = new TextStyle({
+        fontFamily: 'Arial',
+        fontSize: 24,
+        fontWeight: 'bold',
+        fill: '#000000'
+    });
+
+    healthTxt = new Text({
+        text: health,
+        style,
+    });
+
+    healthTxt.x = 32;
+    healthTxt.y = 4;
+
+    app.stage.addChild(healthTxt);
+
+    moneyTxt = new Text({
+        text: money,
+        style,
+    });
+
+    moneyTxt.x = 96;
+    moneyTxt.y = 4;
+
+    app.stage.addChild(moneyTxt);
+}
+
 function drawSprite(sprite, position) {
-    const spriteInst = Sprite.from(sprite);
+    let spriteInst = Sprite.from(sprite);
     
     spriteInst.x = (position[0] - 1) * 32;
     spriteInst.y = (position[1] - 1) * 32;
@@ -65,8 +102,13 @@ async function loadPath(json) {
 
 function periodic(time) {
     enemyManager.periodic(gameTime, time.deltaTime);
+
+    towerManager.periodic(enemyManager.enemies, time.deltaTime);
     
     gameTime += time.deltaTime;
+
+    healthTxt.text = enemyManager.health;
+    moneyTxt.text = towerManager.money;
 }
 
 (async () =>
@@ -74,7 +116,7 @@ function periodic(time) {
     await setup();
 
     enemyManager = new EnemyManager(app, path, json);
-    eventHandler = new EventHandler(app);
+    towerManager = new TowerManager(app, json.startMoney);
 
     app.ticker.add((time) => periodic(time));
 })();
