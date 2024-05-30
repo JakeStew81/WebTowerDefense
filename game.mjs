@@ -2,9 +2,7 @@ import { Application, Assets, Sprite, Text, TextStyle } from './pixi.mjs';
 import { EnemyManager } from './EnemyManager.mjs';
 import { TowerManager } from './TowerManager.mjs';
 
-const app = new Application();
-
-const appWidth = screen.width < screen.height ? screen.width : screen.height;
+let app;
 
 let json;
 let path;
@@ -15,14 +13,9 @@ let towerManager;
 let healthTxt;
 let moneyTxt;
 
-async function setup() {
-    await app.init({ background: '#a8acaa', resizeTo: document.getElementById("hi")});
-    console.log(app.screen.width);
-    console.log(app.screen.height)
-    document.body.insertBefore(app.canvas, document.getElementById("hi"));
-
+async function setup(jsonPath) {
     await loadTextures();
-    let json = await loadJSON('./level.json');
+    let json = await loadJSON(jsonPath);
     await loadPath(json);
 
     drawSprite('healthSymbol', [1, 1]);
@@ -32,6 +25,7 @@ async function setup() {
 async function loadTextures() {
     const assets = [
         { alias: 'enemy', src: './assets/enemy.png' },
+        { alias: 'enemy1', src: './assets/enemy1.png' },
         { alias: 'fastTower', src: './assets/fastTower.png' },
         { alias: 'normalTower', src: './assets/normalTower.png' },
         { alias: 'boxingTower', src: './assets/boxingTower.png' },
@@ -84,7 +78,7 @@ function drawSprite(sprite, position) {
 }
 
 async function loadJSON(path) {
-    let response = await fetch('./level.json');
+    let response = await fetch(path);
     json = await response.json();
     return json;
 }
@@ -96,10 +90,19 @@ async function loadPath(json) {
         let goingY = rawPath[a].x == rawPath[a + 1].x;
         let distance = goingY ? rawPath[a + 1].y - rawPath[a].y : rawPath[a + 1].x - rawPath[a].x;
         for (let b = 0; b <= Math.abs(distance); b++) {
-            path.push([goingY ? rawPath[a].x : rawPath[a].x + (b * Math.sign(distance)), goingY ? rawPath[a].y + (b * Math.sign(distance)) : rawPath[a].y]);
-            drawSprite('path', path[path.length - 1]);
+            let pathCoords = [goingY ? rawPath[a].x : rawPath[a].x + (b * Math.sign(distance)), goingY ? rawPath[a].y + (b * Math.sign(distance)) : rawPath[a].y];
+            if (path.length > 0) {
+                if (pathCoords[0] != path[path.length - 1][0] || pathCoords[1] != path[path.length - 1][1]) {
+                    path.push(pathCoords);
+                    drawSprite('path', path[path.length - 1]);
+                }
+            } else {
+                path.push(pathCoords);
+                drawSprite('path', path[path.length - 1]);
+            }
         }
     }
+    console.log(path)
 }
 
 function periodic(time) {
@@ -116,12 +119,13 @@ function periodic(time) {
     moneyTxt.text = towerManager.money;
 }
 
-(async () =>
-{
-    await setup();
+export async function startLevel(jsonPath, application) {
+    app = application;
+
+    await setup(jsonPath);
 
     enemyManager = new EnemyManager(app, path, json);
     towerManager = new TowerManager(app, json.startMoney);
 
     app.ticker.add((time) => periodic(time));
-})();
+};

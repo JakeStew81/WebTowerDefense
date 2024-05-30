@@ -12,6 +12,8 @@ export class EnemyManager {
         this.enemies = [];
 
         this.earnedMoney = 0;
+
+        this.levelComplete = false;
     }
 
     periodic(gameTime, deltaTime) {
@@ -23,11 +25,24 @@ export class EnemyManager {
                 this.enemies.splice(a, 1);
             }
         }
+        let allHaveEntered = true;
         for (let a = 1; a <= Object.keys(this.roster).length; a++) {
+            allHaveEntered = this.roster[a].hasEntered;
             if (this.roster[a].enterTime <= gameTime && !this.roster[a].hasEntered) {
-                this.enemies.push(new Enemy(this.roster[a].health, this.roster[a].speed, this.roster[a].value, this.path, this.app));
+                this.enemies.push(
+                    new Enemy(
+                        this.roster[a].health,
+                        this.roster[a].speed,
+                        this.roster[a].value,
+                        this.roster[a].texture,
+                        this.path, 
+                        this.app
+                    ));
                 this.roster[a].hasEntered = true;
             }
+        }
+        if (allHaveEntered && this.enemies.length == 0) {
+            this.levelComplete = true;
         }
     }
 }

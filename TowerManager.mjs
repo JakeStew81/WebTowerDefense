@@ -32,7 +32,7 @@ export class TowerManager {
         this.ghostFunctions.set("boxingTower", (event) => this.displayTowerGhost(this.boxingTowerGhost, event));
 
         this.towerStats = new Map();
-        this.towerStats.set("normalTower", [5, 80, 5, 100]);
+        this.towerStats.set("normalTower", [5, 70, 5, 100]);
         this.towerStats.set("fastTower", [2, 25, 4, 125]);
         this.towerStats.set("boxingTower", [10, 100, 1.5, 150]);
 

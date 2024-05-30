@@ -1,7 +1,7 @@
-import { Sprite, Graphics } from './pixi.mjs';
+import { Sprite, Graphics, ObservablePoint } from './pixi.mjs';
 
 export class Enemy {
-    constructor(health, speed, value, path, app) {
+    constructor(health, speed, value, texture, path, app) {
         this.value = value;
         this.health = health;
         this.speed = speed;
@@ -13,10 +13,13 @@ export class Enemy {
         this.active = true;
         this.killed = false;
 
-        this.sprite = Sprite.from('enemy');
+        this.sprite = Sprite.from(texture);
 
         this.sprite.x = (path[0][0] - 1) * 32;
         this.sprite.y = (path[0][1] - 1) * 32;
+
+        this.sprite.pivot.set(32, 0);
+        this.sprite.angle = 270;
 
         app.stage.addChild(this.sprite);
 
@@ -52,11 +55,27 @@ export class Enemy {
             app.stage.addChild(bar);
             this.healthBars.push(bar);
         }
+
+        this.facingMap = new Map();
+        this.facingMap.set("10", [90, [0, 32]])
+        this.facingMap.set("-10", [270, [32, 0]])
+        this.facingMap.set("01", [180, [32, 32]])
+        this.facingMap.set("0-1", [0, [0, 0]])
     }
 
     damage(damage) {
         console.log("Damage!")
         this.health -= damage;
+
+        while (damage > 0) {
+            if (this.healthBars[this.healthBars.length - 1].width/3 >= damage) {
+                this.healthBars[this.healthBars.length - 1].width -= damage * 3;
+                damage = 0;
+            } else {
+                damage -= this.healthBars[this.healthBars.length - 1];
+                this.healthBars[this.healthBars.length - 1].width -= this.healthBars[this.healthBars.length - 1].width;
+            }
+        }
     }
 
     move(deltaTime) {
@@ -65,6 +84,13 @@ export class Enemy {
         if (this.distanceOnPath < this.path.length - 1) {
             this.sprite.x += -(this.path[this.distanceOnPath][0] - this.path[this.distanceOnPath + 1][0]) * (32/this.speed) * deltaTime;
             this.sprite.y += -(this.path[this.distanceOnPath][1] - this.path[this.distanceOnPath + 1][1]) * (32/this.speed) * deltaTime;
+
+            let headingStuff = this.facingMap.get((this.path[this.distanceOnPath][0] - this.path[this.distanceOnPath + 1][0]).toString() + (this.path[this.distanceOnPath][1] - this.path[this.distanceOnPath + 1][1]).toString())
+            if (headingStuff != undefined) {
+                this.sprite.pivot.set(headingStuff[1][0], headingStuff[1][1]);
+                this.sprite.angle = headingStuff[0];
+            }
+            
         } else {
             this.sprite.destroy();
             for (let a = 0; a < this.healthBars.length; a++) {

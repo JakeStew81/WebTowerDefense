@@ -1,0 +1,25 @@
+{
+    "enemy1": {
+        "frames": {
+            "frame1": {
+                "frame": { "x": 0, "y":0, "w":32, "h":32 },
+                "sourceSize": { "w": 32, "h": 32 },
+                "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 }
+            },
+            "frame2": {
+                "frame": { "x": 32, "y":0, "w":32, "h":32 },
+                "sourceSize": { "w": 32, "h": 32 },
+                "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 }
+            }
+        },
+        "meta": {
+            "image": "assets/enemy1.png",
+            "format": "RGBA8888",
+            "size": { "w": 128, "h": 32 },
+            "scale": 1
+        },
+        "animations": {
+            "enemy1": ["frame1","frame2"] 
+        }
+    }
+}
