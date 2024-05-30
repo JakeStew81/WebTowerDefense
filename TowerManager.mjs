@@ -2,8 +2,9 @@ import {Sprite, Graphics} from './pixi.mjs';
 import {Tower} from './tower.mjs'
 
 export class TowerManager {
-    constructor (app, startingMoney) {
+    constructor (app, startingMoney, path) {
         this.app = app;
+        this.path = path;
 
         this.money = startingMoney;
 
@@ -26,15 +27,22 @@ export class TowerManager {
         this.boxingTowerGhost.visible = false;
         app.stage.addChild(this.boxingTowerGhost);
 
+        this.longRangeTowerGhost = Sprite.from('longRangeTower');
+        this.longRangeTowerGhost.tint = 0x333333;
+        this.longRangeTowerGhost.visible = false;
+        app.stage.addChild(this.longRangeTowerGhost);
+
         this.ghostFunctions = new Map();
         this.ghostFunctions.set("normalTower", (event) => this.displayTowerGhost(this.normalTowerGhost, event));
         this.ghostFunctions.set("fastTower", (event) => this.displayTowerGhost(this.fastTowerGhost, event));
         this.ghostFunctions.set("boxingTower", (event) => this.displayTowerGhost(this.boxingTowerGhost, event));
+        this.ghostFunctions.set("longRangeTower", (event) => this.displayTowerGhost(this.longRangeTowerGhost, event));
 
         this.towerStats = new Map();
         this.towerStats.set("normalTower", [5, 70, 5, 100]);
         this.towerStats.set("fastTower", [2, 25, 4, 125]);
         this.towerStats.set("boxingTower", [10, 100, 1.5, 150]);
+        this.towerStats.set("longRangeTower", [5, 100, 10, 150]);
 
         this.whichTower = 'none';
 
@@ -97,6 +105,16 @@ export class TowerManager {
             }
             this.app.stage.addEventListener("pointermove", this.ghostFunctions.get("boxingTower"));
         }
+        else if (event.code == 'Digit4') {
+            this.whichTower = "longRangeTower"
+            if (this.rangeCirlce == null) {
+                this.rangeCirlce = new Graphics().circle(0, 0, this.towerStats.get(this.whichTower)[2] * 32).fill("red");
+                this.rangeCirlce.visible = false;
+                this.rangeCirlce.alpha = 0.2;
+                this.app.stage.addChild(this.rangeCirlce);
+            }
+            this.app.stage.addEventListener("pointermove", this.ghostFunctions.get("longRangeTower"));
+        }
     }
     
     mouseHandler(event) {
@@ -104,10 +122,31 @@ export class TowerManager {
         this.rangeCirlce.destroy();
         this.rangeCirlce = null;
         this.app.stage.removeEventListener('pointermove', this.ghostFunctions.get(this.whichTower));
+        let obstructed = false;
+        for (let a = 0; a < this.path.length; a++) {
+            if (obstructed) {break}
+            obstructed = 
+                Math.floor(event.global.x / 32) + 1 == this.path[a][0] &&
+                Math.floor(event.global.y / 32) + 1 == this.path[a][1]
+        }
+        for (let a = 0; a < this.towers.length; a++) {
+            if (obstructed) {break}
+            obstructed = 
+                Math.floor(event.global.x / 32) + 1 == Math.floor(this.towers[a].sprite.x / 32) + 1 &&
+                Math.floor(event.global.y / 32) + 1 == Math.floor(this.towers[a].sprite.y / 32) + 1
+        }
+        if (obstructed) {
+            this.normalTowerGhost.visible = false;
+            this.fastTowerGhost.visible = false;
+            this.boxingTowerGhost.visible = false;
+            this.fastTowerGhost.visible = false;
+            return;
+        }
         if (this.money < this.towerStats.get(this.whichTower)[3]) {
             this.normalTowerGhost.visible = false;
             this.fastTowerGhost.visible = false;
             this.boxingTowerGhost.visible = false;
+            this.fastTowerGhost.visible = false;
             return;
         }
         this.money -= this.towerStats.get(this.whichTower)[3];

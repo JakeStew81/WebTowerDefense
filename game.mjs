@@ -29,6 +29,7 @@ async function loadTextures() {
         { alias: 'fastTower', src: './assets/fastTower.png' },
         { alias: 'normalTower', src: './assets/normalTower.png' },
         { alias: 'boxingTower', src: './assets/boxingTower.png' },
+        { alias: 'longRangeTower', src: './assets/longRangeTower.png' },
         { alias: 'path', src: './assets/path.png' },
         { alias: 'bullet', src: './assets/bullet.png' },
         { alias: 'healthSymbol', src: './assets/healthSymbol.png' }
@@ -125,7 +126,7 @@ export async function startLevel(jsonPath, application) {
     await setup(jsonPath);
 
     enemyManager = new EnemyManager(app, path, json);
-    towerManager = new TowerManager(app, json.startMoney);
+    towerManager = new TowerManager(app, json.startMoney, path);
 
     app.ticker.add((time) => periodic(time));
 };
