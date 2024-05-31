@@ -1,9 +1,10 @@
 import {Enemy} from './enemy.mjs';
 
 export class EnemyManager {
-    constructor(app, path, json) {
+    constructor(app, path, json, spritesheet) {
         this.app = app;
         this.path = path;
+        this.spritesheet = spritesheet;
 
         this.health = json.health;
 
@@ -36,6 +37,7 @@ export class EnemyManager {
                         this.roster[a].value,
                         this.roster[a].texture,
                         this.path, 
+                        this.spritesheet,
                         this.app
                     ));
                 this.roster[a].hasEntered = true;

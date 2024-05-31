@@ -5,6 +5,7 @@ import { TowerManager } from './TowerManager.mjs';
 let app;
 
 let json;
+let spritesheet;
 let path;
 let gameTime = 0;
 let enemyManager;
@@ -15,8 +16,10 @@ let moneyTxt;
 
 async function setup(jsonPath) {
     await loadTextures();
-    let json = await loadJSON(jsonPath);
+    json = await loadJSON(jsonPath);
     await loadPath(json);
+
+    spritesheet = await loadJSON("./animations.json")
 
     drawSprite('healthSymbol', [1, 1]);
     displayStats(json.health, json.startMoney);
@@ -27,6 +30,8 @@ async function loadTextures() {
         { alias: 'enemy', src: './assets/enemy.png' },
         { alias: 'enemy1', src: './assets/enemy1.png' },
         { alias: 'fastTower', src: './assets/fastTower.png' },
+        { alias: 'animations', src: './animations.json' },
+        { alias: 'fastTowerGhost', src: './assets/fastTowerGhost.png' },
         { alias: 'normalTower', src: './assets/normalTower.png' },
         { alias: 'boxingTower', src: './assets/boxingTower.png' },
         { alias: 'longRangeTower', src: './assets/longRangeTower.png' },
@@ -80,8 +85,8 @@ function drawSprite(sprite, position) {
 
 async function loadJSON(path) {
     let response = await fetch(path);
-    json = await response.json();
-    return json;
+    let thing = await response.json();
+    return thing;
 }
 
 async function loadPath(json) {  
@@ -125,8 +130,8 @@ export async function startLevel(jsonPath, application) {
 
     await setup(jsonPath);
 
-    enemyManager = new EnemyManager(app, path, json);
-    towerManager = new TowerManager(app, json.startMoney, path);
+    enemyManager = new EnemyManager(app, path, json, spritesheet);
+    towerManager = new TowerManager(app, json.startMoney, spritesheet, path);
 
     app.ticker.add((time) => periodic(time));
 };

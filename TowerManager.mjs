@@ -2,9 +2,10 @@ import {Sprite, Graphics} from './pixi.mjs';
 import {Tower} from './tower.mjs'
 
 export class TowerManager {
-    constructor (app, startingMoney, path) {
+    constructor (app, startingMoney, spritesheet, path) {
         this.app = app;
         this.path = path;
+        this.spritesheet = spritesheet;
 
         this.money = startingMoney;
 
@@ -17,7 +18,8 @@ export class TowerManager {
         this.normalTowerGhost.visible = false;
         app.stage.addChild(this.normalTowerGhost);
 
-        this.fastTowerGhost = Sprite.from('fastTower');
+        this.fastTowerGhost = Sprite.from('fastTowerGhost');
+        this.fastTowerGhost.setSize(32, 32)
         this.fastTowerGhost.tint = 0x333333;
         this.fastTowerGhost.visible = false;
         app.stage.addChild(this.fastTowerGhost);
@@ -122,6 +124,10 @@ export class TowerManager {
         this.rangeCirlce.destroy();
         this.rangeCirlce = null;
         this.app.stage.removeEventListener('pointermove', this.ghostFunctions.get(this.whichTower));
+        this.normalTowerGhost.visible = false;
+        this.fastTowerGhost.visible = false;
+        this.boxingTowerGhost.visible = false;
+        this.fastTowerGhost.visible = false;
         let obstructed = false;
         for (let a = 0; a < this.path.length; a++) {
             if (obstructed) {break}
@@ -135,20 +141,8 @@ export class TowerManager {
                 Math.floor(event.global.x / 32) + 1 == Math.floor(this.towers[a].sprite.x / 32) + 1 &&
                 Math.floor(event.global.y / 32) + 1 == Math.floor(this.towers[a].sprite.y / 32) + 1
         }
-        if (obstructed) {
-            this.normalTowerGhost.visible = false;
-            this.fastTowerGhost.visible = false;
-            this.boxingTowerGhost.visible = false;
-            this.fastTowerGhost.visible = false;
-            return;
-        }
-        if (this.money < this.towerStats.get(this.whichTower)[3]) {
-            this.normalTowerGhost.visible = false;
-            this.fastTowerGhost.visible = false;
-            this.boxingTowerGhost.visible = false;
-            this.fastTowerGhost.visible = false;
-            return;
-        }
+        if (obstructed) {return;}
+        if (this.money < this.towerStats.get(this.whichTower)[3]) {return;}
         this.money -= this.towerStats.get(this.whichTower)[3];
         this.towers.push(new Tower(
             [Math.floor(event.global.x / 32), Math.floor(event.global.y / 32)], 
@@ -156,6 +150,7 @@ export class TowerManager {
             this.towerStats.get(this.whichTower)[1], 
             this.towerStats.get(this.whichTower)[2], 
             this.whichTower, 
+            this.spritesheet,
             this.app
         ));
         this.whichTower = 'none';

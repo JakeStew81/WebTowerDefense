@@ -1,7 +1,7 @@
-import { Sprite, Graphics, ObservablePoint } from './pixi.mjs';
+import { Sprite, Graphics, Assets, AnimatedSprite, Spritesheet, Texture } from './pixi.mjs';
 
 export class Enemy {
-    constructor(health, speed, value, texture, path, app) {
+    constructor(health, speed, value, texture, path, spritesheet, app) {
         this.value = value;
         this.health = health;
         this.speed = speed;
@@ -13,13 +13,24 @@ export class Enemy {
         this.active = true;
         this.killed = false;
 
-        this.sprite = Sprite.from(texture);
+        this.spritesheet = new Spritesheet(
+            Texture.from(spritesheet[texture].meta.image),
+            spritesheet[texture]
+        );
+
+        this.spritesheet.parse();
+        
+        this.sprite = new AnimatedSprite(this.spritesheet.animations[texture]);
+
+        this.sprite.animationSpeed = 1/20;
 
         this.sprite.x = (path[0][0] - 1) * 32;
         this.sprite.y = (path[0][1] - 1) * 32;
 
         this.sprite.pivot.set(32, 0);
         this.sprite.angle = 270;
+
+        this.sprite.play();
 
         app.stage.addChild(this.sprite);
 
@@ -74,6 +85,9 @@ export class Enemy {
             } else {
                 damage -= this.healthBars[this.healthBars.length - 1];
                 this.healthBars[this.healthBars.length - 1].width -= this.healthBars[this.healthBars.length - 1].width;
+            }
+            if (this.healthBars[this.healthBars.length - 1].width <= 0) {
+                this.healthBars.splice(this.healthBars.length - 1, 1);
             }
         }
     }
