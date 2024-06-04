@@ -132,6 +132,7 @@ export class Enemy {
         }
 
         if (this.sprite.destroyed) {return}
+        if (this.healthBars.length <= 0) {return}
 
         this.healthBars[0].x = this.sprite.x;
         this.healthBars[0].y = this.sprite.y - 9;

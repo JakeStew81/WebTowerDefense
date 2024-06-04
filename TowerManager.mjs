@@ -43,8 +43,8 @@ export class TowerManager {
         this.towerStats = new Map();
         this.towerStats.set("normalTower", [5, 67, 4.75, 100]);
         this.towerStats.set("fastTower", [2.5, 22.5, 3.5, 145]);
-        this.towerStats.set("boxingTower", [5, 55, 2, 140]);
-        this.towerStats.set("longRangeTower", [15, 95, 12, 150]);
+        this.towerStats.set("boxingTower", [5, 50, 2, 135]);
+        this.towerStats.set("longRangeTower", [15, 95, 999, 150]);
 
         this.whichTower = 'none';
 
