@@ -13,6 +13,7 @@ let towerManager;
 
 let healthTxt;
 let moneyTxt;
+let lvlTxt;
 
 async function setup(jsonPath) {
     await loadTextures();
@@ -22,13 +23,13 @@ async function setup(jsonPath) {
     spritesheet = await loadJSON("./animations.json")
 
     drawSprite('healthSymbol', [1, 1]);
-    displayStats(json.health, json.startMoney);
+    displayStats(json.health, json.startMoney, "1/" + Object.keys(json.enemies).length);
 }
 
 async function loadTextures() {
     const assets = [
-        { alias: 'enemy', src: './assets/enemy.png' },
         { alias: 'enemy1', src: './assets/enemy1.png' },
+        { alias: 'tankyEnemy', src: './assets/tankyEnemy.png' },
         { alias: 'fastTower', src: './assets/fastTower.png' },
         { alias: 'animations', src: './animations.json' },
         { alias: 'fastTowerGhost', src: './assets/fastTowerGhost.png' },
@@ -43,7 +44,7 @@ async function loadTextures() {
     await Assets.load(assets)
 }
 
-function displayStats(health, money) {
+function displayStats(health, money, level) {
     let style = new TextStyle({
         fontFamily: 'Arial',
         fontSize: 24,
@@ -61,8 +62,6 @@ function displayStats(health, money) {
 
     app.stage.addChild(healthTxt);
 
-    console.log(healthTxt.text);
-
     moneyTxt = new Text({
         text: money,
         style,
@@ -72,6 +71,16 @@ function displayStats(health, money) {
     moneyTxt.y = 4;
 
     app.stage.addChild(moneyTxt);
+
+    lvlTxt = new Text({
+        text: level,
+        style,
+    });
+
+    lvlTxt.x = 200;
+    lvlTxt.y = 4;
+
+    app.stage.addChild(lvlTxt);
 }
 
 function drawSprite(sprite, position) {
@@ -122,7 +131,15 @@ function periodic(time) {
     enemyManager.earnedMoney = 0;
 
     healthTxt.text = enemyManager.health;
+    lvlTxt.text = enemyManager.wave + "/" + Object.keys(json.enemies).length;
     moneyTxt.text = towerManager.money;
+    if (enemyManager.resetTime) {
+        gameTime = 0;
+        enemyManager.resetTime = false;
+    }
+    if (enemyManager.levelComplete) {
+        app.ticker.destroy();
+    }
 }
 
 export async function startLevel(jsonPath, application) {

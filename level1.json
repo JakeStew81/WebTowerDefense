@@ -55,22 +55,400 @@
     },
     "enemies": {
         "1": {
-            "enterTime": 200,
-            "health": 100,
-            "speed": 20,
-            "texture": "enemy1",
-            "value": 10,
-            "hasEntered": false
+            "1": {
+                "enterTime": 300,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "2": {
+                "enterTime": 325,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "3": {
+                "enterTime": 350,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "4": {
+                "enterTime": 375,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "5": {
+                "enterTime": 400,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "6": {
+                "enterTime": 425,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "7": {
+                "enterTime": 450,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "8": {
+                "enterTime": 475,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "9": {
+                "enterTime": 500,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "10": {
+                "enterTime": 525,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            }
         },
         "2": {
-            "enterTime": 300,
-            "health": 10,
-            "speed": 10,
-            "texture": "enemy1",
-            "value": 10,
-            "hasEntered": false
+            "1": {
+                "enterTime": 100,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "2": {
+                "enterTime": 125,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "3": {
+                "enterTime": 150,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "4": {
+                "enterTime": 175,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "5": {
+                "enterTime": 200,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "6": {
+                "enterTime": 225,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "7": {
+                "enterTime": 250,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            }
+        },
+        "3": {
+            "1": {
+                "enterTime": 100,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "2": {
+                "enterTime": 125,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "3": {
+                "enterTime": 142.5,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "4": {
+                "enterTime": 150,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "5": {
+                "enterTime": 175,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "6": {
+                "enterTime": 187.5,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "7": {
+                "enterTime": 200,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "8": {
+                "enterTime": 225,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "9": {
+                "enterTime": 237.5,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "10": {
+                "enterTime": 250,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "11": {
+                "enterTime": 275,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "12": {
+                "enterTime": 287.5,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "13": {
+                "enterTime": 300,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "14": {
+                "enterTime": 325,
+                "health": 5,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 5,
+                "hasEntered": false
+            },
+            "15": {
+                "enterTime": 337.5,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            }
+        },
+        "4": {
+            "1": {
+                "enterTime": 100,
+                "health": 50,
+                "speed": 15,
+                "texture": "tankyEnemy",
+                "value": 30,
+                "hasEntered": false
+            },
+            "2": {
+                "enterTime": 125,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "3": {
+                "enterTime": 137.5,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "4": {
+                "enterTime": 150,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "5": {
+                "enterTime": 162.5,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "6": {
+                "enterTime": 175,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "7": {
+                "enterTime": 187.5,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "8": {
+                "enterTime": 212.5,
+                "health": 50,
+                "speed": 15,
+                "texture": "tankyEnemy",
+                "value": 30,
+                "hasEntered": false
+            }
+        },
+        "5": {
+            "1": {
+                "enterTime": 100,
+                "health": 50,
+                "speed": 15,
+                "texture": "tankyEnemy",
+                "value": 30,
+                "hasEntered": false
+            },
+            "2": {
+                "enterTime": 125,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "3": {
+                "enterTime": 137.5,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "4": {
+                "enterTime": 167.5,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "5": {
+                "enterTime": 175,
+                "health": 10,
+                "speed": 5,
+                "texture": "enemy1",
+                "value": 15,
+                "hasEntered": false
+            },
+            "6": {
+                "enterTime": 187.5,
+                "health": 10,
+                "speed": 5,
+                "texture": "enemy1",
+                "value": 15,
+                "hasEntered": false
+            },
+            "7": {
+                "enterTime": 200,
+                "health": 10,
+                "speed": 5,
+                "texture": "enemy1",
+                "value": 15,
+                "hasEntered": false
+            },
+            "8": {
+                "enterTime": 212.5,
+                "health": 10,
+                "speed": 5,
+                "texture": "enemy1",
+                "value": 15,
+                "hasEntered": false
+            }
         }
     },
-    "health": 200,
+    "health": 100,
     "startMoney": 200
 }

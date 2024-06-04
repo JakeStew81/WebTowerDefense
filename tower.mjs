@@ -63,7 +63,15 @@ export class Tower {
                 this.sprite.rotation = Math.atan2(this.sprite.y - enemies[closestEnemy].sprite.y, this.sprite.x - enemies[closestEnemy].sprite.x) + Math.PI;
             }
             this.time = 0;
-            enemies[closestEnemy].damage(this.damage);
+            if (this.whichTower == "boxingTower") {
+                for (let a = 0; a < enemies.length; a++) {
+                    if (Math.abs(enemies[closestEnemy].sprite.x - enemies[a].sprite.x) < 15 && Math.abs(enemies[closestEnemy].sprite.y - enemies[a].sprite.y) < 15) {
+                        enemies[a].damage(this.damage);
+                    }
+                }
+            } else {
+                enemies[closestEnemy].damage(this.damage);
+            }
         }
     }
 }
