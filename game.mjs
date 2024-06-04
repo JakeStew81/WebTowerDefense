@@ -121,22 +121,6 @@ async function loadPath(json) {
 }
 
 function periodic(time) {
-    enemyManager.periodic(gameTime, time.deltaTime);
-
-    towerManager.periodic(enemyManager.enemies, time.deltaTime);
-    
-    gameTime += time.deltaTime;
-
-    towerManager.money += enemyManager.earnedMoney;
-    enemyManager.earnedMoney = 0;
-
-    healthTxt.text = enemyManager.health;
-    lvlTxt.text = enemyManager.wave + "/" + Object.keys(json.enemies).length;
-    moneyTxt.text = towerManager.money;
-    if (enemyManager.resetTime) {
-        gameTime = 0;
-        enemyManager.resetTime = false;
-    }
     if (enemyManager.levelComplete || enemyManager.health <= 0) {
         app.stage.removeChildren(0);
 
@@ -157,8 +141,23 @@ function periodic(time) {
         winText.y = 320;
     
         app.stage.addChild(winText);
+    } else {
+        enemyManager.periodic(gameTime, time.deltaTime);
 
-        app.ticker.destroy();
+        towerManager.periodic(enemyManager.enemies, time.deltaTime);
+        
+        gameTime += time.deltaTime;
+
+        towerManager.money += enemyManager.earnedMoney;
+        enemyManager.earnedMoney = 0;
+
+        healthTxt.text = enemyManager.health;
+        lvlTxt.text = enemyManager.wave + "/" + Object.keys(json.enemies).length;
+        moneyTxt.text = towerManager.money;
+        if (enemyManager.resetTime) {
+            gameTime = 0;
+            enemyManager.resetTime = false;
+        }
     }
 }
 

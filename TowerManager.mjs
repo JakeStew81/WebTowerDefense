@@ -41,10 +41,10 @@ export class TowerManager {
         this.ghostFunctions.set("longRangeTower", (event) => this.displayTowerGhost(this.longRangeTowerGhost, event));
 
         this.towerStats = new Map();
-        this.towerStats.set("normalTower", [5, 68, 4.5, 100]);
-        this.towerStats.set("fastTower", [3, 20, 4, 150]);
-        this.towerStats.set("boxingTower", [10, 75, 1.5, 125]);
-        this.towerStats.set("longRangeTower", [15, 80, 999, 135]);
+        this.towerStats.set("normalTower", [5, 67, 4.75, 100]);
+        this.towerStats.set("fastTower", [2.5, 22.5, 3.5, 145]);
+        this.towerStats.set("boxingTower", [5, 55, 2, 140]);
+        this.towerStats.set("longRangeTower", [12.5, 87.5, 999, 150]);
 
         this.whichTower = 'none';
 

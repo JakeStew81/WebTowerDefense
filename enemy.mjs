@@ -32,6 +32,8 @@ export class Enemy {
 
         this.sprite.play();
 
+        this.dot = 0;
+
         app.stage.addChild(this.sprite);
 
         this.healthBarColors = [
@@ -75,7 +77,6 @@ export class Enemy {
     }
 
     damage(damage) {
-        console.log("Damage!")
         this.health -= damage;
 
         while (damage > 0) {
@@ -90,6 +91,10 @@ export class Enemy {
                 this.healthBars.splice(this.healthBars.length - 1, 1);
             }
         }
+    }
+
+    damageOverTime(time) {
+        this.dot = time;
     }
 
     move(deltaTime) {
@@ -111,6 +116,11 @@ export class Enemy {
                 this.healthBars[a].destroy()
             }
             this.active = false;
+        }
+
+        if (this.dot > 0 && this.time >= this.speed) {
+            this.dot -= 0.25
+            this.damage(.25);
         }
 
         if (this.time >= this.speed) {

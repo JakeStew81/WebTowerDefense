@@ -447,6 +447,72 @@
                 "value": 15,
                 "hasEntered": false
             }
+        },
+        "6": {
+            "1": {
+                "enterTime": 100,
+                "health": 100,
+                "speed": 10,
+                "texture": "tankyEnemy",
+                "value": 40,
+                "hasEntered": false
+            },
+            "2": {
+                "enterTime": 125,
+                "health": 100,
+                "speed": 10,
+                "texture": "tankyEnemy",
+                "value": 10,
+                "hasEntered": false
+            },
+            "3": {
+                "enterTime": 175,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "4": {
+                "enterTime": 180,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "5": {
+                "enterTime": 185,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "6": {
+                "enterTime": 190,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "7": {
+                "enterTime": 195,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            },
+            "8": {
+                "enterTime": 200,
+                "health": 10,
+                "speed": 10,
+                "texture": "enemy1",
+                "value": 10,
+                "hasEntered": false
+            }
         }
     },
     "health": 10,
