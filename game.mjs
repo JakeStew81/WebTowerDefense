@@ -157,6 +157,8 @@ function periodic(time) {
         winText.y = 320;
     
         app.stage.addChild(winText);
+
+        app.ticker.destroy();
     }
 }
 

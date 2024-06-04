@@ -388,7 +388,7 @@
                 "health": 50,
                 "speed": 5,
                 "texture": "tankyEnemy",
-                "value": 100,
+                "value": 50,
                 "hasEntered": false
             },
             "2": {
