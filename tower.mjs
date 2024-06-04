@@ -65,7 +65,7 @@ export class Tower {
             this.time = 0;
             if (this.whichTower == "boxingTower") {
                 for (let a = 0; a < enemies.length; a++) {
-                    if (Math.abs(enemies[closestEnemy].sprite.x - enemies[a].sprite.x) < 15 && Math.abs(enemies[closestEnemy].sprite.y - enemies[a].sprite.y) < 15) {
+                    if (Math.abs(enemies[closestEnemy].sprite.x - enemies[a].sprite.x) < 32 && Math.abs(enemies[closestEnemy].sprite.y - enemies[a].sprite.y) < 32) {
                         enemies[a].damage(this.damage);
                     }
                 }
