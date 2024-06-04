@@ -137,8 +137,26 @@ function periodic(time) {
         gameTime = 0;
         enemyManager.resetTime = false;
     }
-    if (enemyManager.levelComplete) {
-        app.ticker.destroy();
+    if (enemyManager.levelComplete || enemyManager.health <= 0) {
+        app.stage.removeChildren(0);
+
+        let winStyle = new TextStyle({
+            fontFamily: 'titleFont',
+            fontSize: 96,
+            fontWeight: 'bold',
+            fill: '#000000'
+        });
+
+        let winText = new Text({
+            text: (enemyManager.levelComplete) ? "You Win!" : "You Loose...",
+            style: winStyle,
+        });
+        
+        winText.anchor.set(0.5);
+        winText.x = 320;
+        winText.y = 320;
+    
+        app.stage.addChild(winText);
     }
 }
 
