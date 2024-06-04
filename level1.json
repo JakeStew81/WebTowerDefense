@@ -386,9 +386,9 @@
             "1": {
                 "enterTime": 100,
                 "health": 50,
-                "speed": 15,
+                "speed": 5,
                 "texture": "tankyEnemy",
-                "value": 30,
+                "value": 100,
                 "hasEntered": false
             },
             "2": {
